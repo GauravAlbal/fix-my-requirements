@@ -253,7 +253,7 @@ answer_to_operator:
 | `proposed_surviving_requirement_set.entries[]` | list | Review proposal only; each entry retains `requirement_id` and the exact `source_pointer` join key. |
 | `proposed_surviving_requirement_set.authority` | literal string | Must remain `REVIEW_PROPOSAL_ONLY`. |
 | `truncation.status` | enum | `FULL` only when the declared candidate set was interrogated; otherwise `TRUNCATED`. |
-| `truncation.candidate_cap` | literal | v0.1.0 runtime bound: `uncapped`. Do not select 8 or 16. |
+| `truncation.candidate_cap` | literal | v0.1.1 runtime bound: `uncapped`. Do not select 8 or 16. |
 | `truncation.deferred_tail` | list | Every deferred candidate or pointer and its reason; empty only when `FULL`. |
 
 If `truncation.status` is `TRUNCATED`, the direct answer and survivor set MUST be scoped as partial, and `continuation_boundary` MUST identify the deferred work. If `FULL`, `deferred_candidate_count` MUST be `0`, `deferred_tail` MUST be `[]`, and deferral fields MUST be `null`.
@@ -294,6 +294,12 @@ Use this rendering when the operator needs a human-readable sitting. Keep the la
 |---|---|---|---|---|---|---|
 | R-01 | <text> | <pointer> | EXPLICIT/INFERRED/EXTERNAL/UNAVAILABLE | MUST/MUST_NOT/SHOULD/SHOULD_NOT/MAY/UNSPECIFIED | <authority or UNKNOWN> | OUTCOME/CONSTRAINT/IMPLEMENTATION_CHOICE/ASSUMPTION/MIXED/UNKNOWN |
 
+## CONTRACT SURFACE / CONSUMER CLOSURE
+Typed `contract_surface` / `consumer_closure` evidence MUST appear here so machine fields survive human rendering. Do not bury them only in basis prose.
+| Requirement ID | Surface kind | Consumers | Consumer-closure status | Closure basis |
+|---|---|---|---|---|
+| <R-ID or `none`> | HUMAN_POLICY/MACHINE_CONSUMED/UNKNOWN | <named consumers or `none`> | ESTABLISHED/INCOMPLETE/UNKNOWN | <authoritative weaker-contract permission, per-consumer preservation evidence, or UNKNOWN/blocked> |
+
 ## DISPOSITIONS
 
 ### KEEP
@@ -307,9 +313,9 @@ Use this rendering when the operator needs a human-readable sitting. Keep the la
 | <R-ID or `none`> | <value> | <specific preservation counterfactual> | `null` | <basis> | <refs> | <boundary> |
 
 ### RELAX
-| Requirement ID | Current authority | Concrete break if deleted | Proposed survivor (weaker form) | Basis | Source refs | Confidence boundary |
-|---|---|---|---|---|---|---|
-| <R-ID or `none`> | <value> | <surviving obligation> | <weaker concrete form> | <basis> | <refs> | <boundary> |
+| Requirement ID | Current authority | Concrete break if deleted | Proposed survivor (weaker form) | Sufficiency witness | Basis | Source refs | Confidence boundary |
+|---|---|---|---|---|---|---|---|
+| <R-ID or `none`> | <value> | <surviving obligation> | <weaker concrete form> | <source-grounded witness for each served invariant, or UNKNOWN/blocked> | <basis> | <refs> | <boundary> |
 
 ### REWRITE
 | Requirement ID | Current authority | Concrete break if deleted | Proposed survivor (outcome/constraint) | Basis | Source refs | Confidence boundary |
@@ -365,4 +371,4 @@ Set boundary: <what remains unresolved>
 - Limitations: <material limitations>
 ```
 
-The Markdown table rows are templates: omit optional move rows rather than emitting more than five. Keep an explicit `none` row for an empty disposition or coupling label so all five labels remain visible.
+The Markdown table rows are templates: omit optional move rows rather than emitting more than five. Keep an explicit `none` row for an empty disposition or coupling label so all five labels remain visible. Human rendering MUST keep `status.mode` as `READ_ONLY_DIAGNOSIS`, `proposed_surviving_requirement_set.authority` as `REVIEW_PROPOSAL_ONLY`, every RELAX row's `sufficiency_witness`, and every contract-surface/consumer-closure field. A RELAX row without a positive sufficiency witness is blocked: do not recommend RELAX; render `UNKNOWN`/`blocked`.

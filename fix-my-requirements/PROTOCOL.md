@@ -87,7 +87,7 @@ For an implied candidate, point to the source spans that require or support the 
 
 ## Phase 3 — interrogate each candidate
 
-For every candidate selected under the cap in Phase 5, answer all four questions below. Use concrete named effects, not taste, familiarity, or “seems important.” Keep `current_authority` (what binds the source today) separate from the eventual recommendation (what should survive).
+For every material candidate interrogated at runtime, answer all four questions below. Runtime `candidate_cap` is uncapped; 8 and 16 are evaluation arms only, not a selection bound. Use concrete named effects, not taste, familiarity, or “seems important.” Keep `current_authority` (what binds the source today) separate from the eventual recommendation (what should survive).
 
 ### 3.0 Contract-surface classification
 
@@ -123,8 +123,7 @@ Answer:
 
 > Who or what currently makes this binding?
 
-Use one or more of these labels, with a source pointer and confidence boundary:
-
+Classify the current binding basis using the authority taxonomy in [`REQUIREMENT_LAW.md`](REQUIREMENT_LAW.md) (Authority law). That section is the sole owner of the labels; do not duplicate the list here. Record one or more of those kinds with a source pointer and confidence boundary.
 
 A missing owner or rationale is not evidence for deletion. Existing implementation can show consequence or migration cost, but cannot circularly establish that its own mechanism is required.
 
@@ -207,12 +206,12 @@ A `DELETE` must name the successful deletion counterfactual in reverse: what rem
 
 ## Phase 5 — apply the candidate cap and deferred tail
 
-v0.1.0 release configuration: `candidate_cap = uncapped`. The bound is the available source/context, not an interrogation cap of 8 or 16. Caps 8 and 16 are evaluation arms, not runtime configurations. The run must record:
+v0.1.1 release configuration: `candidate_cap = uncapped`. The bound is the available source/context, not an interrogation cap of 8 or 16. Caps 8 and 16 are evaluation arms, not runtime configurations. The run must record:
 
 ```yaml
 bounds:
   candidate_cap: uncapped
-  cap_selection_basis: v0.1.0-release-uncapped
+  cap_selection_basis: v0.1.1-release-uncapped
   candidates_extracted: <count>
   candidates_interrogated: <count>
   deferred_tail: []
@@ -220,7 +219,7 @@ bounds:
 ```
 
 1. Interrogate every material requirement within the available source/context boundary.
-2. If the source cannot be fully examined, declare the deferred tail and use `UNKNOWN` rather than substituting a smaller candidate cap. Mark `truncated: true`.
+2. If the source cannot be fully examined (a partial scan), declare the deferred tail and use `UNKNOWN` rather than substituting a smaller candidate cap. Mark `truncated: true`. A partial examination MUST retain the unexamined remainder explicitly in `deferred_tail`; it MUST NOT present as a complete sitting or silently drop the tail.
 3. Every deferred candidate still receives exactly one disposition: `UNKNOWN`, with `analysis_status: DEFERRED`. Its record must state that no positive or negative conclusion was reached because of the bound, retain its source pointer, and appear in `deferred_tail`. State that the sitting is incomplete for the deferred tail.
 
 The bound never licenses a guessed `DELETE`, a silent omission, or a claim that unexamined candidates are unnecessary.

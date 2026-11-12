@@ -1,6 +1,6 @@
-# Fix My Requirements — requirement law v0.1.0
+# Fix My Requirements — requirement law v0.1.1
 
-Status: v0.1.0. A `RELAX` must carry a positive sufficiency witness (see Disposition law).
+Status: v0.1.1 (maintenance). A `RELAX` must carry a positive sufficiency witness (see Disposition law).
 
 ## Governing question
 
@@ -85,7 +85,7 @@ After individual dispositions, inspect the surviving graph. A cluster is coupled
 
 ## Boundedness law
 
-Release configuration: `candidate_cap = uncapped`. Interrogate every material requirement within the available source/context boundary. If the source cannot be fully examined, declare the deferred tail and use `UNKNOWN` rather than substituting a smaller candidate cap. Caps 8 and 16 are evaluation arms, not v0.1.0 runtime configurations.
+Release configuration: `candidate_cap = uncapped`. Interrogate every material requirement within the available source/context boundary. If the source cannot be fully examined, declare the deferred tail and use `UNKNOWN` rather than substituting a smaller candidate cap. Caps 8 and 16 are evaluation arms, not v0.1.1 runtime configurations.
 
 ## Evaluation law
 

@@ -1,4 +1,4 @@
-# Fix My Requirements — standalone run constraints v0.1.0
+# Fix My Requirements — standalone run constraints v0.1.1
 
 Use this prompt when a client needs the full execution contract materialized. It is self-contained and requires no private runtime, private repository, private prompt, or absolute local path.
 
