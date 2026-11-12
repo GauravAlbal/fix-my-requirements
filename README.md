@@ -50,9 +50,13 @@ My source:
 
 ## Install
 
+From your project:
+
 ```sh
 npx skills add GauravAlbal/fix-my-requirements
 ```
+
+Checked on 2026-11-12 with skills CLI 1.8.1 and Claude Code 2.1.304: after a project-level install, Claude Code listed and loaded the skill. Other hosts and user-level (`-g`) installs have not been checked.
 
 Then:
 
@@ -190,21 +194,22 @@ The differences show up in cases like these:
 
 ```text
 The API MUST use PostgreSQL transactions
-so no partial account transfer occurs.
+to ensure no partial account transfer occurs.
 ```
 
-A plain review relaxed the `MUST` because PostgreSQL was over-specific.
+A plain review got the substance right: its explanation asked for all-or-nothing transfers without mandating PostgreSQL. But its one-word decision was `RELAX`, where the answer frozen before the run was `REWRITE`.
 
-That weakens the wrong thing.
-
-Fix My Requirements separates them:
+Fix My Requirements returned `REWRITE`, recorded the source's force as `MUST`, and kept the mechanism separate (condensed from the recorded output):
 
 ```text
-KEEP:    no partial account transfer
-REWRITE: PostgreSQL transactions are one way to achieve it
+REWRITE  require each account transfer to be atomic: all effects commit or none do
+         PostgreSQL transactions are one way to achieve it, not the requirement
+source force: MUST
 ```
 
 You can change databases without making half a money transfer acceptable.
+
+[Both recorded outputs, side by side →](notes/CASE_money_rule.md)
 
 ### 2. Two architecture rules only justify each other
 
@@ -252,6 +257,14 @@ That rule is now explicit: “seems overkill” is never enough to weaken a mach
 On a separate set of 12 real specifications, a reviewer who did not know which analysis came from the skill preferred the Fix My Requirements result **12 out of 12 times**.
 
 Check the recommendations before changing the spec. This is diagnosis, not a green light.
+
+## Did it help?
+
+It helped if a decision changed what you will build: a requirement you can now cut with evidence, a tool that turned out to be one option rather than the requirement, or an `UNKNOWN` that stopped the agent from guessing. If it only agreed with the spec you already had, it did not help, and that is worth knowing too.
+
+Either way, [tell me what it changed](https://github.com/GauravAlbal/agent-skills/issues/new?template=skill-feedback.yml). A few lines are enough; submissions are public. To get notified of new releases, watch this repository (Watch → Custom → Releases).
+
+Related tools, by the problem they handle: [start here](https://github.com/GauravAlbal).
 
 ## Limits
 
